@@ -1,5 +1,6 @@
 ---
 import KayanSerit from './KayanSerit.astro';
+import Dunya from './Dunya.astro';
 interface Props {
   ust?: { ad: string; url: string }[];
   baslik: string;
@@ -10,11 +11,6 @@ interface Props {
 const { ust = [], baslik, giris, ton = 'koyu', serit } = Astro.props;
 ---
 <section class:list={['sayfa-basi', `sb-${ton}`, { koyu: ton === 'koyu' }]}>
-  {ton === 'koyu' && (
-    <svg class="sb-iz" viewBox="0 0 600 600" aria-hidden="true">
-      <circle cx="300" cy="300" r="290" /><circle cx="300" cy="300" r="205" /><circle cx="300" cy="300" r="120" />
-    </svg>
-  )}
   <div class="sb-ic">
     {ust.length > 0 && (
       <nav class="iz" aria-label="Konum">
@@ -26,6 +22,7 @@ const { ust = [], baslik, giris, ton = 'koyu', serit } = Astro.props;
     {giris && <p class="giris">{giris}</p>}
     <slot />
   </div>
+  {ton === 'koyu' && <div class="sb-dunya"><Dunya /></div>}
 </section>
 {serit && <KayanSerit ogeler={serit} egik />}
 
@@ -33,15 +30,16 @@ const { ust = [], baslik, giris, ton = 'koyu', serit } = Astro.props;
   .sayfa-basi { position: relative; overflow: hidden; isolation: isolate; }
   .sb-koyu {
     background: var(--murekkep); color: var(--kagit);
-    padding: clamp(3rem, 8vw, 7rem) var(--kenar) clamp(4rem, 10vw, 9rem);
+    padding: clamp(3rem, 7vw, 6rem) var(--kenar) clamp(4rem, 9vw, 8rem);
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 2rem clamp(2rem, 5vw, 5rem); align-items: center;
   }
+  .sb-dunya { width: 100%; max-width: 30rem; justify-self: end; color: var(--kagit); }
   .sb-acik {
     margin-inline: var(--kenar);
     padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(3rem, 7vw, 6rem);
     border-bottom: 2px solid var(--murekkep);
   }
-  .sb-iz { position: absolute; right: -10%; top: -30%; width: min(62vw, 46rem); z-index: -1; }
-  .sb-iz circle { fill: none; stroke: var(--sari); stroke-width: 1.5; opacity: 0.5; }
   .sb-ic { position: relative; }
   .iz { display: flex; gap: 0.6rem; flex-wrap: wrap; font-family: var(--display); font-size: 0.9375rem; margin-bottom: 1.75rem; }
   .sb-koyu .iz { color: var(--lavanta); }
@@ -57,7 +55,12 @@ const { ust = [], baslik, giris, ton = 'koyu', serit } = Astro.props;
   }
   .giris {
     font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); line-height: 1.4;
-    max-width: 36rem; margin: clamp(1.75rem, 3.5vw, 3rem) 0 0 auto;
+    max-width: 36rem; margin: clamp(1.75rem, 3.5vw, 3rem) 0 0;
+  }
+  .sb-acik .giris { margin-left: auto; }
+  @media (max-width: 56rem) {
+    .sb-koyu { grid-template-columns: 1fr; }
+    .sb-dunya { order: -1; max-width: 15rem; justify-self: start; }
   }
   .sb-koyu .giris { color: var(--lavanta); }
 </style>

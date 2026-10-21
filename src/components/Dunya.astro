@@ -1,0 +1,70 @@
+---
+import { site } from '../data/site';
+import Logo from './Logo.astro';
+interface Props { yaziHalkasi?: boolean }
+const { yaziHalkasi = true } = Astro.props;
+const id = Math.random().toString(36).slice(2, 8);
+const meridyenler = Array.from({ length: 8 }, (_, i) => i);
+const paraleller = [-110, -62, 62, 110];
+---
+<svg class="dunya-svg" viewBox="0 0 500 500" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id={`kure-${id}`}><circle cx="250" cy="250" r="150" /></clipPath>
+    <radialGradient id={`isik-${id}`} cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#FFF3A6" />
+      <stop offset="55%" stop-color="#FCDA04" />
+      <stop offset="100%" stop-color="#D9B800" />
+    </radialGradient>
+    {yaziHalkasi && <path id={`yorunge-${id}`} d="M250,250 m-205,0 a205,205 0 1,1 410,0 a205,205 0 1,1 -410,0" />}
+  </defs>
+
+  {yaziHalkasi && (
+    <g class="yazi-don">
+      <text>
+        <textPath href={`#yorunge-${id}`} textLength="1286" lengthAdjust="spacing">{site.slogan} ✳ {site.slogan} ✳</textPath>
+      </text>
+    </g>
+  )}
+
+  <g class="egim">
+    <circle cx="250" cy="250" r="150" fill={`url(#isik-${id})`} />
+    <g clip-path={`url(#kure-${id})`} class="izgara">
+      {paraleller.map((y) => {
+        const ry = Math.sqrt(150 * 150 - y * y);
+        return <ellipse cx="250" cy={250 + y} rx={ry} ry={ry * 0.16} />;
+      })}
+      {meridyenler.map((i) => (
+        <ellipse class="meridyen" cx="250" cy="250" rx="150" ry="150" style={`animation-delay: ${-(i * 12) / meridyenler.length}s`} />
+      ))}
+    </g>
+    <circle cx="250" cy="250" r="150" class="kenar" />
+    <rect x="100" y="230" width="300" height="40" clip-path={`url(#kure-${id})`} fill={`url(#isik-${id})`} />
+    <Logo class="dunya-logo" x="140" y="232" width="220" height="38" />
+  </g>
+</svg>
+
+<style>
+  .dunya-svg { width: 100%; overflow: visible; display: block; }
+  .yazi-don { transform-origin: 250px 250px; animation: dunya-don 48s linear infinite; }
+  .yazi-don text { font-family: var(--display); font-size: 31px; font-weight: 600; letter-spacing: -0.01em; fill: currentColor; }
+  .egim { transform-origin: 250px 250px; transform: rotate(-14deg); }
+  .izgara ellipse { fill: none; stroke: var(--murekkep); stroke-width: 1.6; opacity: 0.55; }
+  .meridyen {
+    transform-box: fill-box; transform-origin: center;
+    animation: meridyen 12s linear infinite;
+  }
+  .kenar { fill: none; stroke: var(--murekkep); stroke-width: 2; }
+  .dunya-logo { color: var(--murekkep); }
+  @keyframes dunya-don { to { transform: rotate(-360deg); } }
+  /* Meridyenler soldan sağa akar: genişlik 0 → tam → 0, yön değişerek küre dönüyor gibi görünür */
+  @keyframes meridyen {
+    0%   { transform: scaleX(1);    opacity: 0.15; }
+    25%  { transform: scaleX(0.02); opacity: 0.9; }
+    50%  { transform: scaleX(-1);   opacity: 0.15; }
+    75%  { transform: scaleX(-0.02);opacity: 0.9; }
+    100% { transform: scaleX(1);    opacity: 0.15; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .yazi-don, .meridyen { animation: none; }
+  }
+</style>
