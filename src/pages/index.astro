@@ -3,11 +3,14 @@ import Base from '../layouts/Base.astro';
 import Halka from '../components/Halka.astro';
 import Cagri from '../components/Cagri.astro';
 import IsKarti from '../components/IsKarti.astro';
-import { site, hizmetler, surec } from '../data/site';
+import OneCikanIs from '../components/OneCikanIs.astro';
+import { site, hizmetler, surec, oduller } from '../data/site';
 import { isler, haberler, tarihYaz } from '../data/icerik';
 const tumIsler = await isler();
 const secili = (tumIsler.filter((i) => i.data.one_cikan).length ? tumIsler.filter((i) => i.data.one_cikan) : tumIsler).slice(0, 3);
 const sonHaberler = (await haberler()).slice(0, 3);
+const [oneCikan, ...digerIsler] = secili;
+const smarties = oduller.find((o) => o.ad.includes('SMARTIES'));
 ---
 <Base>
   <section class="giris koyu">
@@ -48,6 +51,8 @@ const sonHaberler = (await haberler()).slice(0, 3);
     </div>
   </section>
 
+  {oneCikan && <OneCikanIs is={oneCikan} />}
+
   <section class="bolum hizmetler">
     <div class="bolum-ust">
       <h2 class="bolum-baslik">İletişimin her alanında markalarımızın yanındayız</h2>
@@ -68,15 +73,35 @@ const sonHaberler = (await haberler()).slice(0, 3);
     </ul>
   </section>
 
-  {secili.length > 0 && (
+  {smarties && (
+    <section class="taninma koyu">
+      <div class="taninma-ust">
+        <p class="taninma-etiket">{smarties.ad} {smarties.yil}</p>
+        <h2>Dark Horse'lar vardır.</h2>
+      </div>
+      <div class="taninma-metin">
+        <p class="on">
+          Bağımsız, küçük ölçekli ve kendi yolunu açan bir ajansız. Belki oyunun
+          en görünür oyuncusu değiliz; ama markalarımızla birlikte anlamlı, etkili
+          ve iz bırakan hikayeler üretmeye inanıyoruz.
+        </p>
+        <p>
+          SMARTIES Business Impact Index 2025'te Türkiye'nin en yaratıcı ajansları
+          arasında yer almak, bizim için indie ruhun, stratejik fikrin ve birlikte
+          üretmenin değerli bir karşılığı.
+        </p>
+        <p class="taninma-not">{smarties.kategori}</p>
+      </div>
+    </section>
+  )}
+
+  {digerIsler.length > 0 && (
     <section class="bolum isler">
       <div class="bolum-ust">
-        <h2 class="bolum-baslik">Anlattığımız hikayeler</h2>
+        <h2 class="bolum-baslik">Anlattığımız diğer hikayeler</h2>
         <a class="metin-baglanti" href="/isler/">Tüm işlerimiz</a>
       </div>
-      <div class="is-izgara">
-        {secili.map((is, i) => <IsKarti is={is} buyuk={i === 0} />)}
-      </div>
+      <div class="is-izgara">{digerIsler.map((is) => <IsKarti is={is} />)}</div>
     </section>
   )}
 
@@ -146,6 +171,7 @@ const sonHaberler = (await haberler()).slice(0, 3);
     gap: clamp(2rem, 5vw, 5rem);
     padding: clamp(2rem, 5vw, 4rem) var(--kenar) clamp(4rem, 9vw, 8rem);
     background: var(--murekkep); color: var(--kagit);
+    min-height: calc(100svh - 4.5rem);
   }
   .kunye { font-family: var(--display); font-size: 1rem; color: var(--sari); margin: 0 0 1.25rem; }
   h1 {
@@ -201,13 +227,28 @@ const sonHaberler = (await haberler()).slice(0, 3);
 
   .isler { padding-top: 0; }
   .is-izgara { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem); }
-  .is-izgara > :first-child { grid-column: 1 / -1; }
   .haberler { padding-bottom: 0; }
   .haber-kartlari { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0 2rem; border-top: 2px solid var(--murekkep); }
   .haber-kartlari a { display: block; padding: 1.5rem 0; text-decoration: none; }
   .haber-kartlari time { font-family: var(--display); font-size: 0.9375rem; color: var(--gri); }
   .haber-kartlari h3 { font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 0.5rem 0 0; }
   .haber-kartlari a:hover h3 { text-decoration: underline; text-decoration-color: var(--sari); text-decoration-thickness: 3px; }
+  .taninma {
+    background: var(--murekkep); color: var(--kagit);
+    padding: clamp(4.5rem, 10vw, 9rem) var(--kenar);
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 2.5rem clamp(2.5rem, 6vw, 6rem); align-items: end;
+    border-top: 1px solid rgba(206, 200, 234, 0.15);
+  }
+  .taninma-etiket { font-family: var(--display); color: var(--sari); margin: 0 0 1.25rem; font-size: 1rem; }
+  .taninma h2 {
+    font-family: var(--display);
+    font-size: clamp(2.75rem, 1.3rem + 6vw, 7.5rem);
+    font-weight: 700; line-height: 0.92; letter-spacing: -0.05em; margin: 0;
+  }
+  .taninma-metin { color: var(--lavanta); max-width: var(--olcu); }
+  .taninma-metin .on { color: var(--kagit); font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.625rem); line-height: 1.45; margin-top: 0; }
+  .taninma-not { font-family: var(--display); font-weight: 600; color: var(--sari); margin-bottom: 0; }
   .surec { padding-top: 0; }
   .surec-giris { max-width: var(--olcu); margin: -1rem 0 clamp(2rem, 4vw, 3.5rem); color: var(--gri); }
   .adimlar {
@@ -247,7 +288,7 @@ const sonHaberler = (await haberler()).slice(0, 3);
     .adimlar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 52rem) {
-    .giris, .manifesto, .is-izgara { grid-template-columns: 1fr; }
+    .giris, .manifesto, .is-izgara, .taninma { grid-template-columns: 1fr; }
     .giris-halka { max-width: 24rem; order: -1; }
     .liste a { grid-template-columns: minmax(0, 1fr) auto; }
     .liste p { grid-column: 1; }

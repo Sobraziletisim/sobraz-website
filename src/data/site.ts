@@ -15,8 +15,10 @@ export const site = {
     il: 'İstanbul',
   },
   haritaUrl: 'https://www.google.com/maps/search/?api=1&query=Quick+Tower+Workinton+%C4%B0%C3%A7erenk%C3%B6y+Ata%C5%9Fehir',
-  // TODO: sosyal medya hesapları
-  sosyal: [] as { ad: string; url: string }[],
+  sosyal: [
+    { ad: 'Instagram', url: 'https://www.instagram.com/sobrazonline/' },
+    { ad: 'LinkedIn', url: 'https://www.linkedin.com/company/sobraz/' },
+  ] as { ad: string; url: string }[],
 };
 
 export const menu = [
@@ -29,7 +31,9 @@ export const menu = [
 ] as { ad: string; url: string; koleksiyon?: 'isler' | 'haberler' }[];
 
 // Ödüller: { yil: 2025, ad: 'Ödülün adı', kategori: 'Kategori', proje: 'Proje adı' }
-export const oduller: { yil: number; ad: string; kategori?: string; proje?: string }[] = [];
+export const oduller: { yil: number; ad: string; kategori?: string; proje?: string }[] = [
+  { yil: 2025, ad: 'SMARTIES Business Impact Index', kategori: 'Türkiye Top Creative Agencies' },
+];
 
 // Açık pozisyonlar: { baslik: 'PR Uzmanı', tur: 'Tam zamanlı', aciklama: '...' }
 export const pozisyonlar: { baslik: string; tur: string; aciklama: string }[] = [];

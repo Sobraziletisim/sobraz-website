@@ -33,6 +33,7 @@ const yil = new Date().getFullYear();
       </address>
       <a href={site.telefonHref}>{site.telefon}</a>
       <a href={`mailto:${site.eposta}`}>{site.eposta}</a>
+      {site.sosyal.map((x) => <a href={x.url} target="_blank" rel="noopener">{x.ad}</a>)}
     </div>
   </div>
 

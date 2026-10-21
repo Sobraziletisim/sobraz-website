@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { is: CollectionEntry<'isler'> }
+const { is } = Astro.props;
+const d = is.data;
+---
+<section class:list={['one-cikan', 'koyu', { 'gorselli': d.kapak }]} aria-labelledby={`oc-${is.id}`}>
+  {d.kapak && <img class="arka" src={d.kapak} alt="" loading="lazy" decoding="async" />}
+  <div class="ic">
+    <p class="ust">Öne çıkan iş{d.marka && <span>{d.marka}</span>}</p>
+    <h2 id={`oc-${is.id}`}>{d.baslik}</h2>
+    <p class="ozet">{d.ozet}</p>
+    <a class="dugme dugme-sari" href={`/isler/${is.id}/`}>Hikayeyi okuyun</a>
+  </div>
+  {!d.kapak && (
+    <svg class="iz" viewBox="0 0 600 600" aria-hidden="true">
+      <circle cx="300" cy="300" r="290" />
+      <circle cx="300" cy="300" r="200" />
+      <circle cx="300" cy="300" r="110" />
+    </svg>
+  )}
+</section>
+
+<style>
+  .one-cikan {
+    position: relative; overflow: hidden; isolation: isolate;
+    min-height: min(92svh, 56rem);
+    display: grid; align-items: end;
+    background: var(--murekkep); color: var(--kagit);
+    padding: clamp(4rem, 9vw, 7rem) var(--kenar);
+  }
+  .arka { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .gorselli::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(30, 22, 51, 0.15) 0%, rgba(30, 22, 51, 0.88) 78%);
+  }
+  .iz { position: absolute; right: -12%; top: -18%; width: min(70vw, 52rem); z-index: -1; }
+  .iz circle { fill: none; stroke: var(--sari); stroke-width: 1.5; opacity: 0.55; }
+  .ic { max-width: 58rem; }
+  .ust { font-family: var(--display); font-size: 1rem; color: var(--sari); margin: 0 0 1.25rem; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+  .ust span { color: var(--lavanta); }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 1.4rem + 7vw, 8.5rem);
+    font-weight: 700; line-height: 0.92; letter-spacing: -0.05em;
+    margin: 0;
+  }
+  .ozet { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem); line-height: 1.4; max-width: 40rem; margin: 1.75rem 0 2.25rem; color: var(--lavanta); }
+</style>

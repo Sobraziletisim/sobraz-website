@@ -1,27 +1,31 @@
 ---
-# TASLAK: Müşteri adı içerdiği için yayında değil. Onay gelirse "taslak: true" satırını "taslak: false" yapın.
-baslik: "Bir çamaşır sepeti kokpite dönüştüğünde"
+baslik: "Yumoş Airlines uçtu"
 marka: "Yumoş x Red Bull Uçuş Günü"
 sektor: "Ev bakım"
-ozet: "Bir çamaşır bakım markasının gündelik dünyasını Red Bull Uçuş Günü'nün adrenaliniyle buluşturduk ve Yumoş Airlines'ı havalandırdık."
+ozet: "Bir çamaşır sepetini kokpite, bir askıyı kanada çevirdik. Gündelik bir anı, Caddebostan sahilinde yaşanan kültürel bir ana dönüştürdük."
 yil: 2026
-hizmetler: ["kreatif-icerik", "etkinlik-ve-deneyim"]
+hizmetler: ["kreatif-icerik", "etkinlik-ve-deneyim", "medya-iliskileri"]
+# kapak: "/isler/yumos-airlines.jpg"   (görseli public/isler klasörüne koyup bu satırı açın)
 one_cikan: true
-taslak: true
+taslak: false
 ---
-
-## Zorluk
-
-Gündelik bir ürün kategorisini, insanların konuşmak ve paylaşmak isteyeceği kültürel bir ana nasıl dönüştürürüz?
 
 ## Fikir
 
-İyi fikirler çoğu zaman markanın kendi alet çantasında saklıdır. Bir çamaşır sepetini kokpite, bir askıyı kanada çevirdik. Red Bull'un adrenalin kültürü ile Yumoş'un gündelik anları büyülü kılan dünyası aynı hikayede buluştu.
+İyi fikirler genelde markanın alet çantasında saklı. Pazarlama dünyasının son dönemde en çok konuştuğu şeylerden biri, elindeki en sıradan gerçeği yaratıcı hammaddeye dönüştürmek. Yumoş x Red Bull Uçuş Günü'nde tam olarak bunu yaptık: bir çamaşır sepetini kokpite, bir askıyı kanada çevirdik.
 
-## Uygulama
+## Tek kanal değil, bütün bir hikaye
 
-Hikayeyi tek bir kanalda bırakmadık. Sosyal medyada bir hazırlık hikayesiyle başladık, bunu gerçek bir uçuş ekibine dönüştürdük, Caddebostan sahilinde ortak bir anıya taşıdık ve ardından yeniden içeriğe döndürdük. İçerik, deneyim, dijital, eğlence ve aktivasyon aynı anda, aynı sesle konuştu.
+Bu hikayeyi oluşturup anlatırken tek bir kanalda kalmadık. İçerik, deneyim, dijital, eğlence ve aktivasyon aynı anda, aynı sesle konuştu. Parçalardan oluşan değil, bütün düşünülerek tamamlanan bir fikir ve uygulama yolculuğu tasarladık.
 
-## Sonuç
+Yumoş Airlines böyle kuruldu: sosyal medyada bir hazırlık hikayesiyle başladık, gerçek bir uçuş ekibine dönüştürdük, Caddebostan sahilinde fiziksel ve kolektif bir ortak anıya taşıdık, sonra yeniden içeriğe geri döndürdük. Hiçbir mecra diğerinden kopuk değildi; izleyici nerede olduğunu fark etmeden hikayenin içinde kaldı.
 
-Yumoş Airlines uçtu. Asıl kazanım ise bir çamaşır bakım markasının gündelik bir anı kültürel bir ana dönüştürebilme cesaretiydi.
+## İzletmek değil, yaşatmak
+
+Markalar artık sadece izletmek değil; hissettirmek, deneyimletmek ve yaşatmak zorunda. Red Bull'un adrenalin kültürü ile Yumoş'un gündelik anları büyülü kılan dünyasını bir araya getirdiğimizde ortaya çıkan da bu oldu. İki marka da birbirinden bir şey ödünç aldı, ikisi de kendi dünyasında zenginleşerek çıktı.
+
+## İşin arkasında insan eli ve aklı
+
+Kurgu, ekip, sahildeki o "uçacak mı uçmayacak mı" anı; hiçbiri salt algoritmayla değil, gerçek bir ekibin cesaretiyle var oldu. Bugünün izleyicisi kusursuz olanı değil, gerçek ve eğlenceli olanı arıyor. Biz de tüm gerçekliğimizle alandaydık.
+
+> Yumoş Airlines uçtu. Ama bizim için asıl mesele, bir çamaşır bakım markasının gündelik bir anı kültürel bir ana dönüştürebilme cesaretiydi.
