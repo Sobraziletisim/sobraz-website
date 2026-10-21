@@ -1,0 +1,75 @@
+---
+import { menu } from '../data/site';
+import Logo from './Logo.astro';
+import { aktifMenu } from '../data/icerik';
+const gorunur = await aktifMenu(menu);
+const yol = Astro.url.pathname;
+const aktif = (url: string) => yol === url || (url !== '/' && yol.startsWith(url));
+---
+<header class="ust koyu">
+  <a class="marka" href="/"><Logo baslik="Sobraz ana sayfa" /></a>
+
+  <nav class="masaustu" aria-label="Ana menü">
+    {gorunur.map((m) => (
+      <a href={m.url} aria-current={aktif(m.url) ? 'page' : undefined}>{m.ad}</a>
+    ))}
+    <a class="dugme dugme-kucuk dugme-sari" href="/iletisim/#form">Bize yazın</a>
+  </nav>
+
+  <details class="mobil">
+    <summary aria-label="Menüyü aç">
+      <span class="cizgi"></span><span class="cizgi"></span>
+    </summary>
+    <nav aria-label="Mobil menü">
+      <a href="/">Ana sayfa</a>
+      {gorunur.map((m) => (
+        <a href={m.url} aria-current={aktif(m.url) ? 'page' : undefined}>{m.ad}</a>
+      ))}
+      <a class="dugme dugme-sari" href="/iletisim/#form">Bize yazın</a>
+    </nav>
+  </details>
+</header>
+
+<style>
+  .ust {
+    position: relative; z-index: 5;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem;
+    padding: 1.1rem var(--kenar);
+    font-family: var(--display);
+    background: var(--murekkep); color: var(--kagit);
+  }
+  .marka { display: block; color: var(--sari); width: clamp(7.5rem, 12vw, 9.5rem); }
+  .marka :global(svg) { width: 100%; height: auto; }
+  .masaustu { display: flex; align-items: center; gap: clamp(1.25rem, 2.5vw, 2.25rem); font-size: 1rem; }
+  .masaustu a:not(.dugme) { text-decoration: none; padding-block: 0.25rem; border-bottom: 2px solid transparent; }
+  .masaustu a:not(.dugme):hover { border-color: currentColor; color: inherit; }
+  .masaustu a[aria-current='page'] { border-color: var(--sari); }
+
+  .mobil { display: none; }
+  .mobil summary {
+    list-style: none; cursor: pointer;
+    width: 2.75rem; height: 2.75rem; display: grid; place-content: center; gap: 6px;
+    border-radius: 50%; background: var(--sari);
+  }
+  .mobil summary::-webkit-details-marker { display: none; }
+  .cizgi { display: block; width: 18px; height: 2px; background: var(--murekkep); transition: transform .2s; }
+  .mobil[open] .cizgi:first-child { transform: translateY(4px) rotate(45deg); }
+  .mobil[open] .cizgi:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .mobil nav {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--murekkep); color: var(--kagit);
+    display: grid; gap: 0.25rem;
+    padding: 1rem var(--kenar) 2rem;
+    border-top: 1px solid rgba(206, 200, 234, 0.2);
+    font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em;
+  }
+  .mobil nav a { text-decoration: none; padding: 0.35rem 0; }
+  .mobil nav a[aria-current='page'] { color: var(--sari); }
+  .mobil nav .dugme { margin-top: 1rem; justify-self: start; font-size: 1.125rem; }
+
+  @media (max-width: 68rem) {
+    .masaustu { display: none; }
+    .mobil { display: block; }
+  }
+</style>

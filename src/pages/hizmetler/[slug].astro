@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import Cagri from '../../components/Cagri.astro';
+import { hizmetler, type Hizmet } from '../../data/site';
+
+export function getStaticPaths() {
+  return hizmetler.map((h) => ({ params: { slug: h.slug }, props: { h } }));
+}
+const { h } = Astro.props as { h: Hizmet };
+const digerleri = hizmetler.filter((x) => x.slug !== h.slug);
+---
+<Base title={h.ad} description={h.kisa}>
+  <SayfaBasi
+    ust={[{ ad: 'Hizmetler', url: '/hizmetler/' }, { ad: h.ad, url: `/hizmetler/${h.slug}/` }]}
+    baslik={h.ad}
+    giris={h.giris}
+  />
+
+  <section class="blok">
+    <h2>Neden önemli?</h2>
+    <div class="blok-metin"><p class="on">{h.neden}</p></div>
+  </section>
+
+  <section class="blok">
+    <h2>Neler yapıyoruz?</h2>
+    <ul class="kapsam">
+      {h.kapsam.map((k) => (
+        <li>
+          <h3>{k.baslik}</h3>
+          <p>{k.metin}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="serit">
+    <h2 class="bolum-baslik">Bu sorular size tanıdık geliyorsa konuşalım</h2>
+    <ul class="sorular">
+      {h.sorular.map((s) => <li>{s}</li>)}
+    </ul>
+    <a class="dugme" href="/iletisim/#form">Sorunuzu bize iletin</a>
+  </section>
+
+  <section class="bolum diger">
+    <h2 class="bolum-baslik">Diğer hizmetlerimiz</h2>
+    <ul class="kartlar">
+      {digerleri.map((d) => (
+        <li>
+          <h3><a href={`/hizmetler/${d.slug}/`}>{d.ad}</a></h3>
+          <p>{d.kisa}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <Cagri />
+</Base>
+
+<style>
+  .kapsam { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
+  .kapsam li {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 0.5rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--lavanta);
+  }
+  .kapsam h3 { font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
+  .kapsam p { margin: 0; color: var(--gri); }
+  .sorular { list-style: none; margin: 0 0 2.5rem; padding: 0; display: grid; gap: 1rem; }
+  .sorular li {
+    font-family: var(--metin); font-style: italic;
+    font-size: clamp(1.375rem, 1rem + 1.3vw, 2.25rem); line-height: 1.25;
+    max-width: 34ch;
+  }
+  .serit .dugme:hover { background: var(--kagit); }
+  .diger { padding-bottom: 0; }
+  .diger h3 a { text-decoration: none; }
+  .diger h3 a:hover { text-decoration: underline; }
+  @media (max-width: 40rem) { .kapsam li { grid-template-columns: 1fr; } }
+</style>

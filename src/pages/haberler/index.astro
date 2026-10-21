@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import { haberler, tarihYaz } from '../../data/icerik';
+const liste = await haberler();
+---
+<Base title="Haberler" description="Sobraz'dan haberler, basın bültenleri ve görüşler.">
+  <SayfaBasi ust={[{ ad: 'Haberler', url: '/haberler/' }]} baslik="Haberler ve bültenler." />
+  <section class="bolum">
+    {liste.length > 0 ? (
+      <ul class="haber-listesi">
+        {liste.map((h) => (
+          <li>
+            <a href={`/haberler/${h.id}/`}>
+              <p class="ust-bilgi"><time datetime={h.data.tarih.toISOString()}>{tarihYaz(h.data.tarih)}</time>, {h.data.tur}</p>
+              <h2>{h.data.baslik}</h2>
+              <p class="ozet">{h.data.ozet}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : <p class="bos">Henüz yayımlanmış bir haber yok.</p>}
+  </section>
+</Base>
+
+<style>
+  .haber-listesi { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
+  .haber-listesi li { border-bottom: 1px solid var(--lavanta); }
+  .haber-listesi a { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr); gap: 0.5rem 3rem; padding: 2rem 0; text-decoration: none; }
+  .ust-bilgi { font-family: var(--display); font-size: 0.975rem; color: var(--gri); margin: 0; grid-row: span 2; }
+  h2 { font-family: var(--display); font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; margin: 0; }
+  .haber-listesi a:hover h2 { text-decoration: underline; text-decoration-color: var(--sari); text-decoration-thickness: 3px; }
+  .ozet { margin: 0; color: var(--gri); max-width: var(--olcu); }
+  @media (max-width: 44rem) { .haber-listesi a { grid-template-columns: 1fr; } .ust-bilgi { grid-row: auto; } }
+</style>

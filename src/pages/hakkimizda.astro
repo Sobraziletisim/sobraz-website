@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import SayfaBasi from '../components/SayfaBasi.astro';
+import Cagri from '../components/Cagri.astro';
+import { degerler, site, oduller } from '../data/site';
+---
+<Base title="Hakkımızda" description="2013'te kurulan Sobraz, kitlelere tüketici değil insan gözüyle bakan, yeni nesil bağımsız bir PR ajansıdır.">
+  <SayfaBasi
+    ust={[{ ad: 'Hakkımızda', url: '/hakkimizda/' }]}
+    baslik="Dünya iyi hikayeler sayesinde dönüyor."
+    giris="2013'ten beri markaların ruhunu yansıtan, toplumda iz bırakan ve samimi bağlar kuran hikayeler inşa ediyoruz."
+  />
+
+  <section class="blok">
+    <h2>Biz kimiz?</h2>
+    <div class="blok-metin">
+      <p class="on">
+        Sobraz, pazarlama iletişimi alanında ezberleri bozan yeni nesil bir
+        bağımsız PR ajansıdır.
+      </p>
+      <p>
+        {site.kurulus} yılında, halkla ilişkilerin bülten göndermekten ve rapor
+        hazırlamaktan çok daha fazlası olduğu inancıyla yola çıktık. Klasik
+        halkla ilişkiler anlayışının ötesine geçerek kitlelere tüketici gözüyle
+        değil, insan gözüyle bakıyoruz.
+      </p>
+      <p>
+        Kreatif içerik üretiminden stratejik planlamaya, geleneksel ve dijital
+        medya iletişiminden etkinlik ve deneyim yönetimine, kriz yönetiminden
+        bütünleşik marka elçisi programlarına kadar iletişimin her alanında
+        markalarımızın yanındayız.
+      </p>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>Neye inanıyoruz?</h2>
+    <div class="blok-metin">
+      <p>
+        Her markanın kendine ait bir karakteri var. İletişimin işi, bu karakteri
+        insanların anlayacağı, hatırlayacağı ve başkalarına anlatmak isteyeceği
+        bir hikayeye dönüştürmek.
+      </p>
+      <p>
+        Bunun için yaratıcılığı tek başına yeterli görmüyoruz. Gücümüzü,
+        markanın iş hedeflerine hizmet eden tüm ajansları aynı masa etrafında
+        buluşturan tek brief ve iş birliği kültürümüzden alıyoruz.
+      </p>
+    </div>
+  </section>
+
+  <section class="serit">
+    <h2 class="bolum-baslik">Değerlerimiz</h2>
+    <ul class="kartlar degerler">
+      {degerler.map((d) => (
+        <li>
+          <h3>{d.ad}</h3>
+          <p>{d.metin}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="blok">
+    <h2>Bağımsız olmak ne demek?</h2>
+    <div class="blok-metin">
+      <p>
+        Bağımsız bir ajans olarak hiçbir uluslararası ağın ya da iletişim
+        holdinginin parçası değiliz. Bu bize iki şey kazandırıyor: hızlı karar
+        verebilmek ve önerilerimizi yalnızca markanın ihtiyacına göre
+        şekillendirebilmek.
+      </p>
+      <p>
+        Çalıştığımız markaları da bu özgürlükle seçiyoruz. Kültür uyumuna
+        inandığımız ve ortak bir değer yaratabildiğimiz markalarla el ele
+        vererek geleceğin iletişim hafızasını şekillendiriyoruz.
+      </p>
+    </div>
+  </section>
+
+  {oduller.length > 0 && (
+    <section class="blok">
+      <h2>Ödüllerimiz</h2>
+      <ul class="oduller">
+        {oduller.map((o) => (
+          <li><span class="yil">{o.yil}</span><span><strong>{o.ad}</strong>{o.kategori && `, ${o.kategori}`}{o.proje && <em> ({o.proje})</em>}</span></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <Cagri />
+</Base>
+
+<style>
+  .degerler { border-top-color: var(--murekkep); }
+  .degerler li { border-bottom-color: rgba(30, 22, 51, 0.25); }
+  .degerler p { color: var(--murekkep); }
+  .oduller { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
+  .oduller li { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--lavanta); }
+  .oduller .yil { font-family: var(--display); color: var(--gri); }
+  .oduller strong { font-family: var(--display); font-weight: 600; }
+</style>

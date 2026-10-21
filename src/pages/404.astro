@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Sayfa bulunamadı | Sobraz">
+  <main id="icerik" class="yok">
+    <h1>Bu sayfa yok.</h1>
+    <p>Aradığınız adres değişmiş ya da kaldırılmış olabilir.</p>
+    <a href="/">Ana sayfaya dön</a>
+  </main>
+</Base>
+
+<style>
+  .yok { min-height: 80vh; display: grid; place-content: center; padding: 2rem var(--kenar); }
+  h1 { font-family: var(--display); font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -0.04em; margin: 0 0 1rem; }
+  p { margin: 0 0 1.5rem; color: var(--gri); }
+  a { font-family: var(--display); color: var(--murekkep); }
+</style>

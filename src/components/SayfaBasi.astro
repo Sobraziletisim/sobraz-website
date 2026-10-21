@@ -1,0 +1,37 @@
+---
+interface Props { ust?: { ad: string; url: string }[]; baslik: string; giris?: string }
+const { ust = [], baslik, giris } = Astro.props;
+---
+<section class="sayfa-basi">
+  {ust.length > 0 && (
+    <nav class="iz" aria-label="Konum">
+      <a href="/">Ana sayfa</a>
+      {ust.map((u) => (<><span aria-hidden="true">/</span><a href={u.url}>{u.ad}</a></>))}
+    </nav>
+  )}
+  <h1>{baslik}</h1>
+  {giris && <p class="giris">{giris}</p>}
+  <slot />
+</section>
+
+<style>
+  .sayfa-basi {
+    padding: clamp(2.5rem, 7vw, 6rem) var(--kenar) clamp(3rem, 7vw, 6rem);
+    border-bottom: 2px solid var(--murekkep);
+    margin-inline: var(--kenar); padding-inline: 0;
+  }
+  .iz { display: flex; gap: 0.6rem; flex-wrap: wrap; font-family: var(--display); font-size: 0.9375rem; color: var(--gri); margin-bottom: 1.75rem; }
+  .iz a { text-decoration: none; }
+  .iz a:hover { text-decoration: underline; }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 1.2rem + 5.5vw, 6.5rem);
+    font-weight: 650; line-height: 0.98; letter-spacing: -0.045em;
+    margin: 0; max-width: 15ch;
+    text-wrap: balance;
+  }
+  .giris {
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); line-height: 1.4;
+    max-width: 36rem; margin: clamp(1.5rem, 3vw, 2.5rem) 0 0 auto;
+  }
+</style>

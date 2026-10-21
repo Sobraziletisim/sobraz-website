@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import { render } from 'astro:content';
+import { haberler, tarihYaz } from '../../data/icerik';
+
+export async function getStaticPaths() {
+  return (await haberler()).map((h) => ({ params: { slug: h.id }, props: { h } }));
+}
+const { h } = Astro.props;
+const { Content } = await render(h);
+---
+<Base title={h.data.baslik} description={h.data.ozet}>
+  <SayfaBasi ust={[{ ad: 'Haberler', url: '/haberler/' }]} baslik={h.data.baslik}>
+    <p class="ust-bilgi"><time datetime={h.data.tarih.toISOString()}>{tarihYaz(h.data.tarih)}</time>, {h.data.tur}</p>
+  </SayfaBasi>
+  <div class="blok">
+    <div></div>
+    <article class="blok-metin yazi">
+      <p class="on">{h.data.ozet}</p>
+      <Content />
+      <p><a class="metin-baglanti" href="/haberler/">Tüm haberler</a></p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .ust-bilgi { font-family: var(--display); color: var(--gri); margin: 1.5rem 0 0; }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sobraz.com/sitemap-index.xml

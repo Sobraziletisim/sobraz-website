@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import IsKarti from '../../components/IsKarti.astro';
+import Cagri from '../../components/Cagri.astro';
+import { render } from 'astro:content';
+import { isler } from '../../data/icerik';
+import { hizmetler } from '../../data/site';
+
+export async function getStaticPaths() {
+  const liste = await isler();
+  return liste.map((is) => ({ params: { slug: is.id }, props: { is, digerleri: liste.filter((x) => x.id !== is.id).slice(0, 2) } }));
+}
+const { is, digerleri } = Astro.props;
+const d = is.data;
+const kimlik = d.marka ?? d.sektor ?? 'Proje';
+const { Content } = await render(is);
+const ilgili = d.hizmetler.map((s) => hizmetler.find((h) => h.slug === s)).filter(Boolean);
+---
+<Base title={d.baslik} description={d.ozet}>
+  <SayfaBasi ust={[{ ad: 'İşlerimiz', url: '/isler/' }, { ad: kimlik, url: `/isler/${is.id}/` }]} baslik={d.baslik} giris={d.ozet} />
+
+  {d.kapak && <figure class="kapak"><img src={d.kapak} alt={d.baslik} /></figure>}
+
+  <div class="blok">
+    <dl class="kunye">
+      {d.marka && <div><dt>Marka</dt><dd>{d.marka}</dd></div>}
+      {d.sektor && <div><dt>Sektör</dt><dd>{d.sektor}</dd></div>}
+      <div><dt>Yıl</dt><dd>{d.yil}</dd></div>
+      {ilgili.length > 0 && (
+        <div><dt>Hizmetler</dt><dd>{ilgili.map((h, i) => <>{i > 0 && ', '}<a href={`/hizmetler/${h!.slug}/`}>{h!.ad}</a></>)}</dd></div>
+      )}
+    </dl>
+    <article class="blok-metin yazi"><Content /></article>
+  </div>
+
+  {digerleri.length > 0 && (
+    <section class="bolum diger">
+      <h2 class="bolum-baslik">Diğer işlerimiz</h2>
+      <div class="izgara">{digerleri.map((x) => <IsKarti is={x} />)}</div>
+    </section>
+  )}
+
+  <Cagri />
+</Base>
+
+<style>
+  .kapak { margin: clamp(2rem, 5vw, 4rem) var(--kenar) 0; border-radius: 1.5rem; overflow: hidden; }
+  .kapak img { width: 100%; height: auto; }
+  .kunye { margin: 0; display: grid; gap: 1.25rem; align-content: start; font-family: var(--display); }
+  .kunye dt { font-size: 0.9375rem; color: var(--gri); }
+  .kunye dd { margin: 0.15rem 0 0; font-size: 1.125rem; font-weight: 500; }
+  .izgara { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 2.5rem; }
+  .diger { padding-top: 0; }
+</style>

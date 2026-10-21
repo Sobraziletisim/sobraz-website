@@ -1,0 +1,72 @@
+---
+import { site, menu, hizmetler } from '../data/site';
+import Logo from './Logo.astro';
+import { aktifMenu } from '../data/icerik';
+const gorunur = await aktifMenu(menu);
+const yil = new Date().getFullYear();
+---
+<footer class="alt koyu">
+  <div class="alt-ust">
+    <div class="alt-marka">
+      <a class="marka" href="/"><Logo baslik="Sobraz ana sayfa" /></a>
+      <p>{site.slogan}.</p>
+    </div>
+
+    <nav class="alt-kolon" aria-label="Site haritası">
+      <h2>Sobraz</h2>
+      <a href="/">Ana sayfa</a>
+      {gorunur.map((m) => <a href={m.url}>{m.ad}</a>)}
+      <a href="/kariyer/">Kariyer</a>
+    </nav>
+
+    <nav class="alt-kolon" aria-label="Hizmetler">
+      <h2>Hizmetler</h2>
+      {hizmetler.map((h) => <a href={`/hizmetler/${h.slug}/`}>{h.ad}</a>)}
+    </nav>
+
+    <div class="alt-kolon">
+      <h2>Ofis</h2>
+      <address>
+        {site.adres.satir1}<br />
+        {site.adres.satir2}<br />
+        {site.adres.ilce} / {site.adres.il}
+      </address>
+      <a href={site.telefonHref}>{site.telefon}</a>
+      <a href={`mailto:${site.eposta}`}>{site.eposta}</a>
+    </div>
+  </div>
+
+  <div class="alt-alt">
+    <span>© 2013–{yil} {site.tamAd}. Bağımsız PR ajansı.</span>
+    <a href="/kvkk/">KVKK aydınlatma metni</a>
+  </div>
+</footer>
+
+<style>
+  .alt {
+    background: var(--murekkep); color: var(--lavanta);
+    padding: clamp(3.5rem, 8vw, 6rem) var(--kenar) 2rem;
+    font-family: var(--display); font-size: 0.975rem;
+  }
+  .alt a { text-decoration: none; }
+  .alt a:hover { color: var(--kagit); text-decoration: underline; }
+  .alt-ust {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr));
+    gap: 2.5rem clamp(1.5rem, 4vw, 3.5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .alt-marka .marka { display: block; color: var(--sari); width: min(100%, 17rem); }
+  .alt-marka .marka :global(svg) { width: 100%; height: auto; }
+  .alt-marka p { font-family: var(--metin); font-style: italic; font-size: 1.125rem; margin: 1rem 0 0; max-width: 18rem; }
+  .alt-kolon { display: grid; align-content: start; gap: 0.6rem; }
+  .alt-kolon h2 { font-size: 0.975rem; font-weight: 600; color: var(--kagit); margin: 0 0 0.4rem; }
+  address { font-style: normal; line-height: 1.55; margin-bottom: 0.4rem; }
+  .alt-alt {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(206, 200, 234, 0.25);
+    padding-top: 1.5rem; font-size: 0.875rem;
+  }
+  @media (max-width: 60rem) { .alt-ust { grid-template-columns: 1fr 1fr; } .alt-marka { grid-column: 1 / -1; } }
+  @media (max-width: 30rem) { .alt-ust { grid-template-columns: 1fr; } }
+</style>

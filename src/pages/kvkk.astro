@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import SayfaBasi from '../components/SayfaBasi.astro';
+import { site } from '../data/site';
+// TASLAK: Bu metin yayına alınmadan önce bir hukukçu tarafından gözden geçirilmelidir.
+---
+<Base title="KVKK aydınlatma metni" description="Sobraz iletişim formu kapsamında kişisel verilerin işlenmesine ilişkin aydınlatma metni.">
+  <SayfaBasi
+    ust={[{ ad: 'KVKK aydınlatma metni', url: '/kvkk/' }]}
+    baslik="KVKK aydınlatma metni"
+  />
+
+  <article class="hukuk">
+    <p>
+      Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun
+      ("KVKK") 10. maddesi uyarınca, veri sorumlusu sıfatıyla
+      <strong>{site.unvan}</strong> ("{site.ad}") tarafından, internet
+      sitemizdeki iletişim formu aracılığıyla paylaştığınız kişisel verilerin
+      işlenmesine ilişkin olarak sizi bilgilendirmek amacıyla hazırlanmıştır.
+    </p>
+
+    <h2>İşlenen kişisel veriler</h2>
+    <p>
+      İletişim formunda paylaştığınız ad soyad, şirket bilgisi, e-posta adresi,
+      telefon numarası ve mesaj içeriği ile bu bilgilerin gönderilmesine ilişkin
+      teknik kayıtlar (tarih, saat ve IP adresi).
+    </p>
+
+    <h2>İşleme amaçları</h2>
+    <p>
+      Kişisel verileriniz; talebinize yanıt verilmesi, sizinle iletişim
+      kurulması, iş birliği tekliflerinin değerlendirilmesi ve hukuki
+      yükümlülüklerimizin yerine getirilmesi amaçlarıyla işlenmektedir.
+    </p>
+
+    <h2>Hukuki sebep ve toplama yöntemi</h2>
+    <p>
+      Verileriniz, internet sitemizdeki iletişim formu aracılığıyla elektronik
+      ortamda toplanmakta; KVKK'nın 5. maddesinde yer alan "bir sözleşmenin
+      kurulması veya ifasıyla doğrudan ilgili olması" ve "veri sorumlusunun
+      meşru menfaati" hukuki sebeplerine dayanılarak işlenmektedir.
+    </p>
+
+    <h2>Aktarım</h2>
+    <p>
+      Verileriniz, yalnızca yukarıdaki amaçlarla sınırlı olarak ve gerekli
+      güvenlik önlemleri alınarak, barındırma ve e-posta hizmetlerinden
+      yararlandığımız hizmet sağlayıcılarla paylaşılabilir. Bu hizmet
+      sağlayıcıların sunucularının yurt dışında bulunması halinde aktarım,
+      KVKK'nın 9. maddesine uygun olarak gerçekleştirilir.
+    </p>
+
+    <h2>Saklama süresi</h2>
+    <p>
+      Verileriniz, işleme amacının gerektirdiği süre boyunca ve ilgili
+      mevzuatta öngörülen süreler kadar saklanır; sürenin sona ermesiyle
+      silinir, yok edilir veya anonim hale getirilir.
+    </p>
+
+    <h2>Haklarınız</h2>
+    <p>
+      KVKK'nın 11. maddesi kapsamında; kişisel verilerinizin işlenip
+      işlenmediğini öğrenme, işlenmişse bilgi talep etme, işlenme amacını ve
+      amacına uygun kullanılıp kullanılmadığını öğrenme, aktarıldığı üçüncü
+      kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini, şartları
+      oluştuğunda silinmesini veya yok edilmesini isteme ve kanuna aykırı
+      işleme nedeniyle zarara uğramanız halinde zararın giderilmesini talep
+      etme haklarına sahipsiniz.
+    </p>
+    <p>
+      Başvurularınızı <a href={`mailto:${site.eposta}`}>{site.eposta}</a> adresine
+      e-posta ile veya {site.adres.satir1}, {site.adres.satir2},
+      {site.adres.ilce} / {site.adres.il} adresine yazılı olarak
+      iletebilirsiniz.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .hukuk { padding: clamp(3rem, 7vw, 6rem) var(--kenar) clamp(4rem, 9vw, 8rem); max-width: calc(var(--olcu) + 2 * var(--kenar)); }
+  .hukuk h2 { font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; margin: 2.5rem 0 0.75rem; }
+  .hukuk p { margin: 0 0 1rem; }
+</style>

@@ -1,0 +1,48 @@
+---
+import Halka from './Halka.astro';
+import { site } from '../data/site';
+interface Props { baslik?: string; metin?: string }
+const {
+  baslik = 'Anlatmaya değer bir hikayeniz var mı?',
+  metin = 'Markanızı, hedeflerinizi ve karşılaştığınız soruyu dinlemek isteriz. İlk görüşme, birbirimizi tanımak için.',
+} = Astro.props;
+---
+<section class="cagri">
+  <div class="cagri-metin">
+    <h2>{baslik}</h2>
+    <p>{metin}</p>
+    <div class="cagri-dugmeler">
+      <a class="dugme" href="/iletisim/#form">Bize yazın</a>
+      <a class="cagri-tel" href={site.telefonHref}>{site.telefon}</a>
+    </div>
+  </div>
+  <div class="cagri-halka"><Halka boyut="kucuk" /></div>
+</section>
+
+<style>
+  .cagri {
+    margin: clamp(4rem, 9vw, 8rem) var(--kenar);
+    background: var(--sari); color: var(--murekkep);
+    border-radius: clamp(1.5rem, 3vw, 2.5rem);
+    padding: clamp(2.5rem, 6vw, 5rem);
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 2.5rem; align-items: center;
+    overflow: hidden;
+  }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 1.2rem + 3.2vw, 4.25rem);
+    font-weight: 650; line-height: 1; letter-spacing: -0.04em;
+    margin: 0; max-width: 14ch;
+  }
+  p { max-width: 32rem; margin: 1.5rem 0 2rem; }
+  .cagri-dugmeler { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
+  .cagri .dugme:hover { background: var(--kagit); }
+  .cagri-tel { font-family: var(--display); font-size: 1.25rem; font-weight: 500; }
+  
+  .cagri-halka { color: var(--murekkep); --halka-dunya: var(--murekkep); --halka-logo: var(--sari); max-width: 22rem; justify-self: end; width: 100%; }
+  @media (max-width: 52rem) {
+    .cagri { grid-template-columns: 1fr; }
+    .cagri-halka { justify-self: start; max-width: 14rem; }
+  }
+</style>

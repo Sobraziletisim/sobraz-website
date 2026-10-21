@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import Cagri from '../../components/Cagri.astro';
+import { hizmetler } from '../../data/site';
+---
+<Base title="Hizmetler" description="Kreatif içerik üretimi, stratejik planlama, medya iletişimi, etkinlik ve deneyim yönetimi, kriz yönetimi ve marka elçisi programları.">
+  <SayfaBasi
+    ust={[{ ad: 'Hizmetler', url: '/hizmetler/' }]}
+    baslik="İletişimin her alanında yanınızdayız."
+    giris="Altı alanda uzmanlaşıyor, hepsini tek bir hikayenin etrafında birleştiriyoruz. Markanızın ihtiyacına göre bir alanda ya da hepsinde birlikte çalışabiliriz."
+  />
+
+  <div class="hizmet-listesi">
+    {hizmetler.map((h, i) => (
+      <article class="hizmet">
+        <div class="hizmet-bas">
+          <h2><a href={`/hizmetler/${h.slug}/`}>{h.ad}</a></h2>
+          <p class="hizmet-giris">{h.giris}</p>
+          <a class="metin-baglanti" href={`/hizmetler/${h.slug}/`}>{h.ad} hakkında daha fazlası</a>
+        </div>
+        <ul class="hizmet-kapsam">
+          {h.kapsam.map((k) => <li>{k.baslik}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+
+  <Cagri baslik="Hangi alanda desteğe ihtiyacınız var?" />
+</Base>
+
+<style>
+  .hizmet-listesi { padding: 0 var(--kenar); }
+  .hizmet {
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 2rem clamp(2rem, 6vw, 6rem);
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-bottom: 1px solid var(--lavanta);
+  }
+  h2 { font-family: var(--display); font-size: clamp(2rem, 1.2rem + 3vw, 4rem); font-weight: 600; line-height: 1; letter-spacing: -0.04em; margin: 0 0 1.25rem; }
+  h2 a { text-decoration: none; }
+  h2 a:hover { text-decoration: underline; text-decoration-color: var(--sari); text-decoration-thickness: 4px; }
+  .hizmet-giris { max-width: var(--olcu); margin: 0 0 1.5rem; }
+  .hizmet-kapsam { list-style: none; margin: 0; padding: 0; align-self: end; font-family: var(--display); font-size: 1.0625rem; }
+  .hizmet-kapsam li { padding: 0.8rem 0 0.8rem 1.6rem; border-top: 1px solid var(--lavanta); position: relative; }
+  .hizmet-kapsam li::before { content: ''; position: absolute; left: 0; top: 1.2rem; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--sari); box-shadow: 0 0 0 1px var(--murekkep); }
+  @media (max-width: 52rem) { .hizmet { grid-template-columns: 1fr; } }
+</style>

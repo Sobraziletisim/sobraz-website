@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import SayfaBasi from '../components/SayfaBasi.astro';
+import { pozisyonlar, site } from '../data/site';
+---
+<Base title="Kariyer" description="Sobraz'da çalışmak: iyi hikayelere inanan, insan gözüyle bakan bir ekip.">
+  <SayfaBasi
+    ust={[{ ad: 'Kariyer', url: '/kariyer/' }]}
+    baslik="İyi hikayelere inanıyorsan, aynı masaya otur."
+    giris="Merakını kaybetmeyen, insanları dinlemeyi seven ve fikirlerini sahiplenen ekip arkadaşları arıyoruz."
+  />
+
+  <section class="blok">
+    <h2>Sobraz'da çalışmak</h2>
+    <div class="blok-metin">
+      <p>
+        Bağımsız bir ajans olarak her ekip üyesinin sesi işin sonucuna doğrudan
+        yansıyor. Fikirler unvana göre değil, markaya ne kattığına göre
+        değerlendiriliyor.
+      </p>
+      <p>
+        Tek brief kültürümüz, farklı uzmanlıklardan insanlarla aynı masada
+        çalışmayı ve her projede yeni bir şey öğrenmeyi mümkün kılıyor.
+      </p>
+      <p>
+        Hibrit çalışıyoruz: haftada iki üç gün ekiple bir araya geliyor, ofiste
+        geçirilen süreyi esnek tutuyoruz.
+      </p>
+    </div>
+  </section>
+
+  <section class="blok">
+    <h2>Açık pozisyonlar</h2>
+    <div class="blok-metin">
+      {pozisyonlar.length > 0 ? (
+        <ul class="pozisyonlar">
+          {pozisyonlar.map((p) => (
+            <li>
+              <h3>{p.baslik}</h3>
+              <p class="tur">{p.tur}</p>
+              <p>{p.aciklama}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>
+          Şu anda açık bir pozisyonumuz yok, ama yetenekli insanlarla tanışmaya
+          her zaman açığız. Özgeçmişini ve bize neden yazdığını anlatan kısa bir
+          notu <a href={`mailto:${site.eposta}?subject=Kariyer`}>{site.eposta}</a> adresine gönderebilirsin.
+        </p>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pozisyonlar { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
+  .pozisyonlar li { padding: 1.5rem 0; border-bottom: 1px solid var(--lavanta); }
+  .pozisyonlar h3 { font-family: var(--display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+  .tur { font-family: var(--display); color: var(--gri); font-size: 0.975rem; margin: 0.25rem 0 0.75rem; }
+  .pozisyonlar p:last-child { margin: 0; }
+</style>

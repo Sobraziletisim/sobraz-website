@@ -1,0 +1,260 @@
+---
+import Base from '../layouts/Base.astro';
+import Halka from '../components/Halka.astro';
+import Cagri from '../components/Cagri.astro';
+import IsKarti from '../components/IsKarti.astro';
+import { site, hizmetler, surec } from '../data/site';
+import { isler, haberler, tarihYaz } from '../data/icerik';
+const tumIsler = await isler();
+const secili = (tumIsler.filter((i) => i.data.one_cikan).length ? tumIsler.filter((i) => i.data.one_cikan) : tumIsler).slice(0, 3);
+const sonHaberler = (await haberler()).slice(0, 3);
+---
+<Base>
+  <section class="giris koyu">
+    <div class="giris-metin">
+      <p class="kunye">2013'ten beri bağımsız PR ajansı</p>
+      <h1>Markaların hikayesini insan gözüyle anlatıyoruz.</h1>
+      <p class="sunus">
+        Bülten göndermenin ve rapor hazırlamanın ötesine geçiyoruz. Markaların
+        ruhunu yansıtan, toplumda iz bırakan ve samimi bağlar kuran stratejik
+        başarı hikayeleri inşa ediyoruz.
+      </p>
+      <div class="giris-dugmeler">
+        <a class="dugme" href="/iletisim/#form">Projenizi konuşalım</a>
+        <a class="metin-baglanti" href="/hizmetler/">Hizmetlerimiz</a>
+      </div>
+    </div>
+    <div class="giris-halka">
+      <Halka />
+      <p class="gorunmez">{site.slogan}.</p>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <h2>Kitlelere tüketici gözüyle değil, insan gözüyle bakıyoruz.</h2>
+    <div class="manifesto-metin">
+      <p>
+        Sobraz, pazarlama iletişimi alanında ezberleri bozan yeni nesil bir
+        bağımsız PR ajansıdır. Klasik halkla ilişkiler anlayışının ötesine
+        geçiyor, her markanın kendine ait bir karakteri ve anlatılmayı bekleyen
+        bir hikayesi olduğuna inanıyoruz.
+      </p>
+      <p>
+        Bu hikayeyi bulmak için önce dinliyoruz: markanın iş hedeflerini,
+        kültürünü ve konuşmak istediği insanları. Sonra o hikayeyi doğru
+        kanallarda, doğru tonla ve doğru zamanda anlatıyoruz.
+      </p>
+      <a class="metin-baglanti" href="/hakkimizda/">Bizi tanıyın</a>
+    </div>
+  </section>
+
+  <section class="bolum hizmetler">
+    <div class="bolum-ust">
+      <h2 class="bolum-baslik">İletişimin her alanında markalarımızın yanındayız</h2>
+      <a class="metin-baglanti" href="/hizmetler/">Tüm hizmetler</a>
+    </div>
+    <ul class="liste">
+      {hizmetler.map((h) => (
+        <li>
+          <a href={`/hizmetler/${h.slug}/`}>
+            <h3>{h.ad}</h3>
+            <p>{h.kisa}</p>
+            <span class="ok" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {secili.length > 0 && (
+    <section class="bolum isler">
+      <div class="bolum-ust">
+        <h2 class="bolum-baslik">Anlattığımız hikayeler</h2>
+        <a class="metin-baglanti" href="/isler/">Tüm işlerimiz</a>
+      </div>
+      <div class="is-izgara">
+        {secili.map((is, i) => <IsKarti is={is} buyuk={i === 0} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="bolum surec">
+    <h2 class="bolum-baslik">Bir hikayenin yolculuğu</h2>
+    <p class="surec-giris">
+      Her iş birliği aynı sırayla ilerler. Adımlar sabit, içi her marka için yeniden doldurulur.
+    </p>
+    <ol class="adimlar">
+      {surec.map((s, i) => (
+        <li>
+          <span class="adim-no" aria-hidden="true">{i + 1}</span>
+          <h3>{s.ad}</h3>
+          <p>{s.metin}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="brief">
+    <div class="brief-ic">
+      <h2 class="bolum-baslik">Tek brief, aynı masa</h2>
+      <p>
+        Gücümüzü yalnızca yaratıcı fikirlerden almıyoruz. Markanın iş
+        hedeflerine hizmet eden tüm ajansları aynı masa etrafında buluşturan
+        tek brief ve iş birliği kültürüyle çalışıyoruz. Herkes aynı hikayeyi
+        anlatınca marka daha güçlü duyuluyor.
+      </p>
+      <a class="metin-baglanti" href="/yaklasim/">Yaklaşımımızı okuyun</a>
+    </div>
+  </section>
+
+  <section class="bolum kultur">
+    <p class="kultur-alinti">
+      Kültür uyumuna inandığımız ve ortak bir değer yaratabildiğimiz markalarla
+      el ele vererek geleceğin iletişim hafızasını şekillendiriyoruz.
+    </p>
+  </section>
+
+  {sonHaberler.length > 0 && (
+    <section class="bolum haberler">
+      <div class="bolum-ust">
+        <h2 class="bolum-baslik">Sobraz'dan haberler</h2>
+        <a class="metin-baglanti" href="/haberler/">Tüm haberler</a>
+      </div>
+      <ul class="haber-kartlari">
+        {sonHaberler.map((h) => (
+          <li>
+            <a href={`/haberler/${h.id}/`}>
+              <time datetime={h.data.tarih.toISOString()}>{tarihYaz(h.data.tarih)}</time>
+              <h3>{h.data.baslik}</h3>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <Cagri />
+</Base>
+
+<style>
+  .giris {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: clamp(2rem, 5vw, 4rem) var(--kenar) clamp(4rem, 9vw, 8rem);
+    background: var(--murekkep); color: var(--kagit);
+  }
+  .kunye { font-family: var(--display); font-size: 1rem; color: var(--sari); margin: 0 0 1.25rem; }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.75rem, 1.3rem + 5vw, 6.25rem);
+    font-weight: 650; line-height: 0.97; letter-spacing: -0.045em;
+    margin: 0; max-width: 13ch;
+  }
+  .sunus { max-width: 34rem; margin: clamp(1.5rem, 3vw, 2.25rem) 0; color: var(--lavanta); }
+  .giris .dugme { background: var(--sari); color: var(--murekkep); }
+  .giris .dugme:hover { background: var(--kagit); }
+  .giris-halka { color: var(--kagit); }
+  .giris-dugmeler { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
+  .giris-halka { max-width: 36rem; width: 100%; justify-self: center; }
+
+  .manifesto {
+    background: var(--sari); color: var(--murekkep);
+    padding: clamp(4rem, 10vw, 9rem) var(--kenar);
+    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 6rem); align-items: end;
+  }
+  .manifesto h2 {
+    font-family: var(--display);
+    font-size: clamp(2.25rem, 1.2rem + 4.2vw, 5.25rem);
+    font-weight: 650; line-height: 1.02; letter-spacing: -0.04em;
+    margin: 0;
+  }
+  .manifesto-metin { max-width: var(--olcu); }
+  .manifesto-metin p { margin: 0 0 1.25rem; }
+
+  .bolum-ust { display: flex; justify-content: space-between; align-items: end; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+  .bolum-ust .bolum-baslik { margin: 0; }
+  .liste { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
+  .liste li { border-bottom: 1px solid var(--lavanta); }
+  .liste a {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    gap: 0.5rem 3rem; align-items: center;
+    padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+    text-decoration: none;
+  }
+  .liste h3 {
+    font-family: var(--display);
+    font-size: clamp(1.625rem, 1rem + 2.4vw, 3.25rem);
+    font-weight: 500; line-height: 1.05; letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .liste p { margin: 0; color: var(--gri); max-width: var(--olcu); }
+  .ok { width: 3.5rem; height: 3.5rem; border-radius: 50%; border: 1px solid currentColor; display: grid; place-content: center; transition: background-color .15s, color .15s; }
+  
+  .liste a:hover h3 { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.15em; text-decoration-color: var(--sari); }
+  .liste a:hover .ok { background: var(--sari); border-color: var(--sari); }
+
+  .isler { padding-top: 0; }
+  .is-izgara { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem); }
+  .is-izgara > :first-child { grid-column: 1 / -1; }
+  .haberler { padding-bottom: 0; }
+  .haber-kartlari { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0 2rem; border-top: 2px solid var(--murekkep); }
+  .haber-kartlari a { display: block; padding: 1.5rem 0; text-decoration: none; }
+  .haber-kartlari time { font-family: var(--display); font-size: 0.9375rem; color: var(--gri); }
+  .haber-kartlari h3 { font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 0.5rem 0 0; }
+  .haber-kartlari a:hover h3 { text-decoration: underline; text-decoration-color: var(--sari); text-decoration-thickness: 3px; }
+  .surec { padding-top: 0; }
+  .surec-giris { max-width: var(--olcu); margin: -1rem 0 clamp(2rem, 4vw, 3.5rem); color: var(--gri); }
+  .adimlar {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2rem clamp(1rem, 2vw, 2rem);
+  }
+  .adimlar li { border-top: 2px solid var(--murekkep); padding-top: 1.25rem; }
+  .adim-no {
+    display: grid; place-content: center;
+    width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    background: var(--sari); color: var(--murekkep);
+    font-family: var(--display); font-weight: 650; font-size: 1.125rem;
+    margin-bottom: 1.25rem;
+  }
+  .adimlar h3 { font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 0.6rem; line-height: 1.15; }
+  .adimlar p { margin: 0; font-size: 1.0625rem; color: var(--gri); }
+
+  .brief { padding: 0 var(--kenar); }
+  .brief-ic {
+    background: var(--lavanta);
+    border-radius: 999px 999px 2rem 2rem;
+    padding: clamp(4.5rem, 11vw, 9rem) clamp(1.5rem, 8vw, 8rem) clamp(3rem, 6vw, 5rem);
+    text-align: center;
+  }
+  .brief-ic .bolum-baslik { margin-inline: auto; }
+  .brief-ic p { max-width: var(--olcu); margin: 0 auto 1.75rem; }
+
+  .kultur { padding-bottom: 0; }
+  .kultur-alinti {
+    font-style: italic; margin: 0 auto; text-align: center;
+    font-size: clamp(1.5rem, 1rem + 1.8vw, 2.625rem); line-height: 1.3;
+    max-width: 30ch;
+  }
+
+  @media (max-width: 64rem) {
+    .adimlar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 52rem) {
+    .giris, .manifesto, .is-izgara { grid-template-columns: 1fr; }
+    .giris-halka { max-width: 24rem; order: -1; }
+    .liste a { grid-template-columns: minmax(0, 1fr) auto; }
+    .liste p { grid-column: 1; }
+    .ok { grid-row: 1 / span 2; grid-column: 2; width: 2.75rem; height: 2.75rem; }
+    .brief-ic { border-radius: 12rem 12rem 1.5rem 1.5rem; }
+  }
+  @media (max-width: 34rem) {
+    .adimlar { grid-template-columns: 1fr; }
+  }
+</style>

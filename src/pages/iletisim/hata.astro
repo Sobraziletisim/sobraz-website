@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+<Base title="Mesaj gönderilemedi" noindex>
+  <section class="sonuc">
+    <h1>Mesajınız gönderilemedi.</h1>
+    <p>
+      Zorunlu alanlardan biri eksik ya da e-posta adresi geçersiz olabilir.
+      Formu kontrol edip tekrar deneyin. Sorun devam ederse bize
+      <a href={site.telefonHref}>{site.telefon}</a> numarasından ulaşabilirsiniz.
+    </p>
+    <a class="dugme" href="/iletisim/#form">Forma dön</a>
+  </section>
+</Base>
+
+<style>
+  .sonuc { padding: clamp(4rem, 10vw, 8rem) var(--kenar); min-height: 60vh; }
+  h1 { font-family: var(--display); font-size: clamp(2.5rem, 1.4rem + 4vw, 5rem); font-weight: 650; line-height: 1; letter-spacing: -0.045em; margin: 0 0 1.25rem; max-width: 14ch; }
+  p { margin: 0 0 2rem; max-width: 34rem; }
+</style>

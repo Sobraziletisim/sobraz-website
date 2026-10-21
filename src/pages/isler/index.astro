@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import SayfaBasi from '../../components/SayfaBasi.astro';
+import IsKarti from '../../components/IsKarti.astro';
+import Cagri from '../../components/Cagri.astro';
+import { isler } from '../../data/icerik';
+const liste = await isler();
+---
+<Base title="İşlerimiz" description="Sobraz'ın markalar için kurduğu iletişim hikayeleri ve projeleri.">
+  <SayfaBasi
+    ust={[{ ad: 'İşlerimiz', url: '/isler/' }]}
+    baslik="Anlattığımız hikayeler."
+    giris="Markalarımızla birlikte kurduğumuz, toplumda iz bırakan iletişim çalışmalarından bir seçki."
+  />
+  <section class="bolum">
+    {liste.length > 0
+      ? <div class="izgara">{liste.map((is) => <IsKarti is={is} />)}</div>
+      : <p class="bos">Projelerimizi yakında burada paylaşacağız. O zamana kadar <a href="/iletisim/">bizimle iletişime geçin</a>, örnek çalışmalarımızı birlikte konuşalım.</p>}
+  </section>
+  <Cagri />
+</Base>
+
+<style>
+  .izgara { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem); }
+  .bos { max-width: var(--olcu); }
+</style>
