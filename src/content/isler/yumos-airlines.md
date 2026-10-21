@@ -7,7 +7,7 @@ yil: 2026
 hizmetler: ["kreatif-icerik", "etkinlik-ve-deneyim", "medya-iliskileri"]
 # kapak: "/isler/yumos-airlines.jpg"   (görseli public/isler klasörüne koyup bu satırı açın)
 one_cikan: true
-taslak: false
+taslak: true
 ---
 
 ## Fikir
