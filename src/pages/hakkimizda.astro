@@ -1,23 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import SayfaBasi from '../components/SayfaBasi.astro';
+import KayanSerit from '../components/KayanSerit.astro';
 import Cagri from '../components/Cagri.astro';
 import { degerler, site, oduller } from '../data/site';
+const tonlar = ['sari', 'koyu', 'lavanta', 'cizgi'];
 ---
 <Base title="Hakkımızda" description="2013'te kurulan Sobraz, kitlelere tüketici değil insan gözüyle bakan, yeni nesil bağımsız bir PR ajansıdır.">
   <SayfaBasi
     ust={[{ ad: 'Hakkımızda', url: '/hakkimizda/' }]}
     baslik="Dünya iyi hikayeler sayesinde dönüyor."
     giris="2013'ten beri markaların ruhunu yansıtan, toplumda iz bırakan ve samimi bağlar kuran hikayeler inşa ediyoruz."
+    serit={['Bağımsız', 'İnsan gözüyle', 'Tek brief', 'Kültür uyumu', "2013'ten beri"]}
   />
 
-  <section class="blok">
-    <h2>Biz kimiz?</h2>
-    <div class="blok-metin">
-      <p class="on">
-        Sobraz, pazarlama iletişimi alanında ezberleri bozan yeni nesil bir
-        bağımsız PR ajansıdır.
-      </p>
+  <section class="beyan">
+    <p class="beyan-buyuk belir">
+      Sobraz, pazarlama iletişimi alanında <em>ezberleri bozan</em> yeni nesil
+      bir bağımsız PR ajansıdır.
+    </p>
+    <div class="beyan-kolon">
       <p>
         {site.kurulus} yılında, halkla ilişkilerin bülten göndermekten ve rapor
         hazırlamaktan çok daha fazlası olduğu inancıyla yola çıktık. Klasik
@@ -33,27 +35,11 @@ import { degerler, site, oduller } from '../data/site';
     </div>
   </section>
 
-  <section class="blok">
-    <h2>Neye inanıyoruz?</h2>
-    <div class="blok-metin">
-      <p>
-        Her markanın kendine ait bir karakteri var. İletişimin işi, bu karakteri
-        insanların anlayacağı, hatırlayacağı ve başkalarına anlatmak isteyeceği
-        bir hikayeye dönüştürmek.
-      </p>
-      <p>
-        Bunun için yaratıcılığı tek başına yeterli görmüyoruz. Gücümüzü,
-        markanın iş hedeflerine hizmet eden tüm ajansları aynı masa etrafında
-        buluşturan tek brief ve iş birliği kültürümüzden alıyoruz.
-      </p>
-    </div>
-  </section>
-
-  <section class="serit">
-    <h2 class="bolum-baslik">Değerlerimiz</h2>
-    <ul class="kartlar degerler">
-      {degerler.map((d) => (
-        <li>
+  <section class="degerler-alan">
+    <h2 class="bolum-baslik belir">Bizi biz yapanlar</h2>
+    <ul class="degerler">
+      {degerler.map((d, i) => (
+        <li class:list={['deger', `deger-${tonlar[i % tonlar.length]}`, 'belir']}>
           <h3>{d.ad}</h3>
           <p>{d.metin}</p>
         </li>
@@ -61,14 +47,33 @@ import { degerler, site, oduller } from '../data/site';
     </ul>
   </section>
 
-  <section class="blok">
-    <h2>Bağımsız olmak ne demek?</h2>
-    <div class="blok-metin">
+  <section class="inanc koyu">
+    <blockquote class="belir">
+      <p>Her markanın kendine ait bir karakteri var.</p>
+    </blockquote>
+    <div class="inanc-metin">
       <p>
-        Bağımsız bir ajans olarak hiçbir uluslararası ağın ya da iletişim
-        holdinginin parçası değiliz. Bu bize iki şey kazandırıyor: hızlı karar
-        verebilmek ve önerilerimizi yalnızca markanın ihtiyacına göre
-        şekillendirebilmek.
+        İletişimin işi, bu karakteri insanların anlayacağı, hatırlayacağı ve
+        başkalarına anlatmak isteyeceği bir hikayeye dönüştürmek.
+      </p>
+      <p>
+        Bunun için yaratıcılığı tek başına yeterli görmüyoruz. Gücümüzü, markanın
+        iş hedeflerine hizmet eden tüm ajansları aynı masa etrafında buluşturan
+        tek brief ve iş birliği kültürümüzden alıyoruz.
+      </p>
+    </div>
+  </section>
+
+  <KayanSerit ogeler={['Dark Horse’lar vardır', 'Küçük ölçekli', 'Kendi yolunu açan', 'İndie ruh']} ton="koyu" yon="sag" />
+
+  <section class="bagimsiz">
+    <p class="bagimsiz-kelime belir" aria-hidden="true">Bağımsız.</p>
+    <div class="bagimsiz-metin">
+      <h2>Bağımsız olmak ne demek?</h2>
+      <p>
+        Hiçbir uluslararası ağın ya da iletişim holdinginin parçası değiliz. Bu
+        bize iki şey kazandırıyor: hızlı karar verebilmek ve önerilerimizi
+        yalnızca markanın ihtiyacına göre şekillendirebilmek.
       </p>
       <p>
         Çalıştığımız markaları da bu özgürlükle seçiyoruz. Kültür uyumuna
@@ -79,11 +84,15 @@ import { degerler, site, oduller } from '../data/site';
   </section>
 
   {oduller.length > 0 && (
-    <section class="blok">
-      <h2>Ödüllerimiz</h2>
+    <section class="oduller-alan">
+      <h2 class="bolum-baslik">Tanınırlık</h2>
       <ul class="oduller">
         {oduller.map((o) => (
-          <li><span class="yil">{o.yil}</span><span><strong>{o.ad}</strong>{o.kategori && `, ${o.kategori}`}{o.proje && <em> ({o.proje})</em>}</span></li>
+          <li class="belir">
+            <span class="yil">{o.yil}</span>
+            <span class="ad">{o.ad}</span>
+            {o.kategori && <span class="kat">{o.kategori}</span>}
+          </li>
         ))}
       </ul>
     </section>
@@ -93,11 +102,99 @@ import { degerler, site, oduller } from '../data/site';
 </Base>
 
 <style>
-  .degerler { border-top-color: var(--murekkep); }
-  .degerler li { border-bottom-color: rgba(30, 22, 51, 0.25); }
-  .degerler p { color: var(--murekkep); }
+  /* Beyan */
+  .beyan { padding: clamp(4.5rem, 10vw, 9rem) var(--kenar) clamp(3rem, 6vw, 5rem); }
+  .beyan-buyuk {
+    font-family: var(--display);
+    font-size: clamp(2rem, 1rem + 4.2vw, 5.5rem);
+    font-weight: 650; line-height: 1.02; letter-spacing: -0.045em;
+    margin: 0 0 clamp(2.5rem, 5vw, 4.5rem); max-width: 20ch;
+  }
+  .beyan-buyuk em {
+    font-style: normal;
+    background: linear-gradient(transparent 62%, var(--sari) 62%, var(--sari) 92%, transparent 92%);
+  }
+  .beyan-kolon {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.5rem clamp(2rem, 5vw, 5rem); max-width: 68rem; margin-left: auto;
+  }
+  .beyan-kolon p { margin: 0; }
+
+  /* Değerler */
+  .degerler-alan { padding: 0 var(--kenar) clamp(4.5rem, 9vw, 8rem); }
+  .degerler {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+  .deger {
+    border-radius: clamp(1.25rem, 2.5vw, 2rem);
+    padding: clamp(2rem, 4vw, 3.5rem);
+    min-height: clamp(16rem, 28vw, 22rem);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .deger:hover { transform: translateY(-6px) rotate(-0.6deg); }
+  .deger h3 {
+    font-family: var(--display);
+    font-size: clamp(1.875rem, 1.1rem + 2.6vw, 3.5rem);
+    font-weight: 700; line-height: 0.98; letter-spacing: -0.04em; margin: 0; max-width: 12ch;
+  }
+  .deger p { margin: 0; max-width: 30rem; font-size: 1.125rem; }
+  .deger-sari { background: var(--sari); color: var(--murekkep); }
+  .deger-koyu { background: var(--murekkep); color: var(--kagit); }
+  .deger-koyu p { color: var(--lavanta); }
+  .deger-lavanta { background: var(--lavanta); color: var(--murekkep); }
+  .deger-cizgi { background: transparent; color: var(--murekkep); box-shadow: inset 0 0 0 2px var(--murekkep); }
+
+  /* İnanç */
+  .inanc {
+    background: var(--murekkep); color: var(--kagit);
+    padding: clamp(5rem, 11vw, 10rem) var(--kenar);
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 2.5rem clamp(2.5rem, 6vw, 6rem); align-items: end;
+  }
+  blockquote { margin: 0; }
+  blockquote p {
+    font-family: var(--metin); font-style: italic; font-weight: 400;
+    font-size: clamp(2.25rem, 1.2rem + 4.4vw, 6rem); line-height: 1.02; letter-spacing: -0.02em;
+    margin: 0;
+  }
+  blockquote p::before { content: '“'; color: var(--sari); }
+  blockquote p::after { content: '”'; color: var(--sari); }
+  .inanc-metin { color: var(--lavanta); max-width: var(--olcu); }
+  .inanc-metin p:first-child { margin-top: 0; color: var(--kagit); }
+
+  /* Bağımsız */
+  .bagimsiz {
+    padding: clamp(5rem, 10vw, 9rem) var(--kenar);
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 2rem clamp(2rem, 5vw, 5rem); align-items: center;
+  }
+  .bagimsiz-kelime {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(3.5rem, 1rem + 10vw, 12rem); line-height: 0.85; letter-spacing: -0.06em;
+    margin: 0; color: transparent; -webkit-text-stroke: 2px var(--murekkep);
+    overflow-wrap: anywhere;
+  }
+  .bagimsiz-metin h2 { font-family: var(--display); font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.08; margin: 0 0 1.25rem; }
+  .bagimsiz-metin p { max-width: var(--olcu); }
+
+  /* Tanınırlık */
+  .oduller-alan { padding: 0 var(--kenar); }
   .oduller { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--murekkep); }
-  .oduller li { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--lavanta); }
-  .oduller .yil { font-family: var(--display); color: var(--gri); }
-  .oduller strong { font-family: var(--display); font-weight: 600; }
+  .oduller li {
+    display: grid; grid-template-columns: 6rem minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 0.5rem 2rem; align-items: baseline;
+    padding: clamp(1.25rem, 2.5vw, 2rem) 0; border-bottom: 1px solid var(--lavanta);
+    font-family: var(--display);
+  }
+  .oduller .yil { color: var(--gri); }
+  .oduller .ad { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem); font-weight: 650; letter-spacing: -0.035em; line-height: 1.05; }
+  .oduller .kat { color: var(--gri); }
+
+  @media (max-width: 52rem) {
+    .degerler, .inanc, .bagimsiz { grid-template-columns: 1fr; }
+    .oduller li { grid-template-columns: 1fr; }
+  }
 </style>

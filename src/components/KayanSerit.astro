@@ -1,0 +1,40 @@
+---
+interface Props { ogeler: string[]; ton?: 'sari' | 'koyu' | 'acik'; yon?: 'sol' | 'sag'; egik?: boolean }
+const { ogeler, ton = 'sari', yon = 'sol', egik = false } = Astro.props;
+const dizi = [...ogeler, ...ogeler];
+---
+<div class:list={['kayan-sar', { egik }]} aria-hidden="true">
+<div class:list={['kayan', `kayan-${ton}`, `kayan-${yon}`]}>
+  <div class="kayan-ray">
+    {[0, 1].map(() => (
+      <ul>
+        {dizi.map((o) => <li>{o}<span class="yildiz">✳</span></li>)}
+      </ul>
+    ))}
+  </div>
+</div>
+</div>
+
+<style>
+  .kayan-sar { overflow: hidden; }
+  .kayan-sar.egik { padding-block: clamp(1.25rem, 2.5vw, 2.25rem); margin-block: calc(-1 * clamp(1.25rem, 2.5vw, 2.25rem)); position: relative; z-index: 2; }
+  .egik .kayan { transform: rotate(-2deg) scale(1.05); }
+  .kayan {
+    overflow: hidden; position: relative; z-index: 1;
+    padding: clamp(0.9rem, 1.8vw, 1.4rem) 0;
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(1.5rem, 1rem + 2.4vw, 3.25rem);
+    letter-spacing: -0.035em; line-height: 1;
+  }
+  .kayan-sari { background: var(--sari); color: var(--murekkep); }
+  .kayan-koyu { background: var(--murekkep); color: var(--kagit); }
+  .kayan-koyu .yildiz { color: var(--sari); }
+  .kayan-acik { background: var(--kagit); color: var(--murekkep); border-block: 2px solid var(--murekkep); }
+  .kayan-ray { display: flex; width: max-content; animation: kay 38s linear infinite; }
+  .kayan-sag .kayan-ray { animation-direction: reverse; }
+  ul { display: flex; list-style: none; margin: 0; padding: 0; }
+  li { display: flex; align-items: center; white-space: nowrap; }
+  .yildiz { display: inline-block; margin: 0 clamp(1rem, 2vw, 2rem); font-size: 0.8em; }
+  @keyframes kay { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .kayan-ray { animation: none; } }
+</style>

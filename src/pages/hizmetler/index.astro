@@ -9,40 +9,91 @@ import { hizmetler } from '../../data/site';
     ust={[{ ad: 'Hizmetler', url: '/hizmetler/' }]}
     baslik="İletişimin her alanında yanınızdayız."
     giris="Altı alanda uzmanlaşıyor, hepsini tek bir hikayenin etrafında birleştiriyoruz. Markanızın ihtiyacına göre bir alanda ya da hepsinde birlikte çalışabiliriz."
+    serit={hizmetler.map((h) => h.ad)}
   />
 
-  <div class="hizmet-listesi">
-    {hizmetler.map((h, i) => (
-      <article class="hizmet">
-        <div class="hizmet-bas">
-          <h2><a href={`/hizmetler/${h.slug}/`}>{h.ad}</a></h2>
-          <p class="hizmet-giris">{h.giris}</p>
-          <a class="metin-baglanti" href={`/hizmetler/${h.slug}/`}>{h.ad} hakkında daha fazlası</a>
-        </div>
-        <ul class="hizmet-kapsam">
-          {h.kapsam.map((k) => <li>{k.baslik}</li>)}
-        </ul>
-      </article>
+  <ul class="hizmet-listesi">
+    {hizmetler.map((h) => (
+      <li class="belir">
+        <a class="hizmet" href={`/hizmetler/${h.slug}/`}>
+          <h2>{h.ad}</h2>
+          <div class="hizmet-yan">
+            <p>{h.kisa}</p>
+            <ul class="etiketler">
+              {h.kapsam.slice(0, 4).map((k) => <li>{k.baslik}</li>)}
+            </ul>
+          </div>
+          <span class="ok" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </span>
+        </a>
+      </li>
     ))}
-  </div>
+  </ul>
+
+  <section class="butun koyu">
+    <p class="butun-buyuk belir">Parçalar değil, <span>bütün.</span></p>
+    <p class="butun-metin">
+      Hizmetlerimizi ayrı ayrı satmıyoruz; markanın hikayesini hangi kanalda
+      anlatmak gerekiyorsa orada, aynı sesle konuşuyoruz. İçerik, medya,
+      deneyim ve strateji tek bir planın parçası.
+    </p>
+  </section>
 
   <Cagri baslik="Hangi alanda desteğe ihtiyacınız var?" />
 </Base>
 
 <style>
-  .hizmet-listesi { padding: 0 var(--kenar); }
+  .hizmet-listesi { list-style: none; margin: 0; padding: clamp(3rem, 7vw, 6rem) 0 0; }
+  .hizmet-listesi > li { border-bottom: 2px solid var(--murekkep); }
+  .hizmet-listesi > li:first-child { border-top: 2px solid var(--murekkep); }
   .hizmet {
-    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 2rem clamp(2rem, 6vw, 6rem);
-    padding: clamp(3rem, 6vw, 5rem) 0;
-    border-bottom: 1px solid var(--lavanta);
+    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    gap: 1.25rem clamp(2rem, 5vw, 5rem); align-items: center;
+    padding: clamp(2rem, 4.5vw, 3.75rem) var(--kenar);
+    text-decoration: none;
+    background: linear-gradient(var(--sari), var(--sari)) no-repeat left / 0% 100%;
+    transition: background-size .5s cubic-bezier(.2,.7,.2,1);
   }
-  h2 { font-family: var(--display); font-size: clamp(2rem, 1.2rem + 3vw, 4rem); font-weight: 600; line-height: 1; letter-spacing: -0.04em; margin: 0 0 1.25rem; }
-  h2 a { text-decoration: none; }
-  h2 a:hover { text-decoration: underline; text-decoration-color: var(--sari); text-decoration-thickness: 4px; }
-  .hizmet-giris { max-width: var(--olcu); margin: 0 0 1.5rem; }
-  .hizmet-kapsam { list-style: none; margin: 0; padding: 0; align-self: end; font-family: var(--display); font-size: 1.0625rem; }
-  .hizmet-kapsam li { padding: 0.8rem 0 0.8rem 1.6rem; border-top: 1px solid var(--lavanta); position: relative; }
-  .hizmet-kapsam li::before { content: ''; position: absolute; left: 0; top: 1.2rem; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--sari); box-shadow: 0 0 0 1px var(--murekkep); }
-  @media (max-width: 52rem) { .hizmet { grid-template-columns: 1fr; } }
+  .hizmet:hover, .hizmet:focus-visible { background-size: 100% 100%; }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 1rem + 3.6vw, 5rem);
+    font-weight: 700; line-height: 0.95; letter-spacing: -0.045em; margin: 0;
+    transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .hizmet:hover h2 { transform: translateX(0.75rem); }
+  .hizmet-yan p { margin: 0 0 1rem; max-width: var(--olcu); }
+  .etiketler { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .etiketler li {
+    font-family: var(--display); font-size: 0.875rem; font-weight: 500;
+    padding: 0.35rem 0.8rem; border-radius: 999px; border: 1.5px solid var(--murekkep);
+  }
+  .ok {
+    width: 4rem; height: 4rem; border-radius: 50%;
+    display: grid; place-content: center;
+    border: 2px solid var(--murekkep);
+    transition: background-color .3s, color .3s, transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .hizmet:hover .ok { background: var(--murekkep); color: var(--sari); transform: rotate(-45deg); }
+
+  .butun {
+    background: var(--murekkep); color: var(--kagit);
+    margin-top: clamp(4rem, 9vw, 8rem);
+    padding: clamp(5rem, 11vw, 10rem) var(--kenar);
+  }
+  .butun-buyuk {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.75rem, 1rem + 7.5vw, 9rem); line-height: 0.9; letter-spacing: -0.055em;
+    margin: 0 0 2.5rem;
+  }
+  .butun-buyuk span { color: var(--sari); }
+  .butun-metin { color: var(--lavanta); max-width: var(--olcu); margin: 0 0 0 auto; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); }
+  .butun + :global(.cagri) { margin-top: clamp(4rem, 9vw, 8rem); }
+
+  @media (max-width: 56rem) {
+    .hizmet { grid-template-columns: minmax(0, 1fr) auto; }
+    .hizmet-yan { grid-column: 1 / -1; grid-row: 2; }
+    .ok { width: 3rem; height: 3rem; }
+  }
 </style>

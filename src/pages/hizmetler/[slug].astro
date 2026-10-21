@@ -15,6 +15,7 @@ const digerleri = hizmetler.filter((x) => x.slug !== h.slug);
     ust={[{ ad: 'Hizmetler', url: '/hizmetler/' }, { ad: h.ad, url: `/hizmetler/${h.slug}/` }]}
     baslik={h.ad}
     giris={h.giris}
+    serit={h.kapsam.map((k) => k.baslik)}
   />
 
   <section class="blok">

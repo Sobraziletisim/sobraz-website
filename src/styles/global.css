@@ -118,3 +118,32 @@ p { text-wrap: pretty; }
 .yazi blockquote { margin: 2rem 0; padding-left: 1.5rem; border-left: 4px solid var(--sari); font-style: italic; font-size: 1.25em; }
 .yazi ul, .yazi ol { padding-left: 1.25rem; }
 
+
+/* Sayfa geçişleri (JS'siz, tarayıcı destekliyorsa) */
+@view-transition { navigation: auto; }
+.ust { view-transition-name: ust; }
+.alt { view-transition-name: alt; }
+::view-transition-old(root) { animation: 260ms cubic-bezier(.4,0,1,1) both sayfa-cik; }
+::view-transition-new(root) { animation: 420ms cubic-bezier(0,0,.2,1) 60ms both sayfa-gir; }
+::view-transition-group(sayfa-baslik) { animation-duration: 450ms; animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+@keyframes sayfa-cik { to { opacity: 0; transform: translateY(-14px); } }
+@keyframes sayfa-gir { from { opacity: 0; transform: translateY(26px); } }
+
+/* Kaydırınca beliren öğeler (destekleyen tarayıcılarda) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .belir {
+      animation: belir linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    @keyframes belir {
+      from { opacity: 0; transform: translateY(48px) scale(.985); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

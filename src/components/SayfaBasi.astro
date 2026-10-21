@@ -1,37 +1,63 @@
 ---
-interface Props { ust?: { ad: string; url: string }[]; baslik: string; giris?: string }
-const { ust = [], baslik, giris } = Astro.props;
+import KayanSerit from './KayanSerit.astro';
+interface Props {
+  ust?: { ad: string; url: string }[];
+  baslik: string;
+  giris?: string;
+  ton?: 'koyu' | 'acik';
+  serit?: string[];
+}
+const { ust = [], baslik, giris, ton = 'koyu', serit } = Astro.props;
 ---
-<section class="sayfa-basi">
-  {ust.length > 0 && (
-    <nav class="iz" aria-label="Konum">
-      <a href="/">Ana sayfa</a>
-      {ust.map((u) => (<><span aria-hidden="true">/</span><a href={u.url}>{u.ad}</a></>))}
-    </nav>
+<section class:list={['sayfa-basi', `sb-${ton}`, { koyu: ton === 'koyu' }]}>
+  {ton === 'koyu' && (
+    <svg class="sb-iz" viewBox="0 0 600 600" aria-hidden="true">
+      <circle cx="300" cy="300" r="290" /><circle cx="300" cy="300" r="205" /><circle cx="300" cy="300" r="120" />
+    </svg>
   )}
-  <h1>{baslik}</h1>
-  {giris && <p class="giris">{giris}</p>}
-  <slot />
+  <div class="sb-ic">
+    {ust.length > 0 && (
+      <nav class="iz" aria-label="Konum">
+        <a href="/">Ana sayfa</a>
+        {ust.map((u) => (<><span aria-hidden="true">/</span><a href={u.url}>{u.ad}</a></>))}
+      </nav>
+    )}
+    <h1>{baslik}</h1>
+    {giris && <p class="giris">{giris}</p>}
+    <slot />
+  </div>
 </section>
+{serit && <KayanSerit ogeler={serit} egik />}
 
 <style>
-  .sayfa-basi {
-    padding: clamp(2.5rem, 7vw, 6rem) var(--kenar) clamp(3rem, 7vw, 6rem);
-    border-bottom: 2px solid var(--murekkep);
-    margin-inline: var(--kenar); padding-inline: 0;
+  .sayfa-basi { position: relative; overflow: hidden; isolation: isolate; }
+  .sb-koyu {
+    background: var(--murekkep); color: var(--kagit);
+    padding: clamp(3rem, 8vw, 7rem) var(--kenar) clamp(4rem, 10vw, 9rem);
   }
-  .iz { display: flex; gap: 0.6rem; flex-wrap: wrap; font-family: var(--display); font-size: 0.9375rem; color: var(--gri); margin-bottom: 1.75rem; }
+  .sb-acik {
+    margin-inline: var(--kenar);
+    padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(3rem, 7vw, 6rem);
+    border-bottom: 2px solid var(--murekkep);
+  }
+  .sb-iz { position: absolute; right: -10%; top: -30%; width: min(62vw, 46rem); z-index: -1; }
+  .sb-iz circle { fill: none; stroke: var(--sari); stroke-width: 1.5; opacity: 0.5; }
+  .sb-ic { position: relative; }
+  .iz { display: flex; gap: 0.6rem; flex-wrap: wrap; font-family: var(--display); font-size: 0.9375rem; margin-bottom: 1.75rem; }
+  .sb-koyu .iz { color: var(--lavanta); }
+  .sb-acik .iz { color: var(--gri); }
   .iz a { text-decoration: none; }
   .iz a:hover { text-decoration: underline; }
   h1 {
     font-family: var(--display);
-    font-size: clamp(2.5rem, 1.2rem + 5.5vw, 6.5rem);
-    font-weight: 650; line-height: 0.98; letter-spacing: -0.045em;
-    margin: 0; max-width: 15ch;
-    text-wrap: balance;
+    font-size: clamp(2.75rem, 1.2rem + 6.8vw, 8rem);
+    font-weight: 700; line-height: 0.92; letter-spacing: -0.05em;
+    margin: 0; max-width: 14ch;
+    view-transition-name: sayfa-baslik;
   }
   .giris {
     font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); line-height: 1.4;
-    max-width: 36rem; margin: clamp(1.5rem, 3vw, 2.5rem) 0 0 auto;
+    max-width: 36rem; margin: clamp(1.75rem, 3.5vw, 3rem) 0 0 auto;
   }
+  .sb-koyu .giris { color: var(--lavanta); }
 </style>
